@@ -55,9 +55,7 @@ const AllCategorySection = () => {
 
 						{/* Description */}
 						<p className='text-white/50 text-sm leading-relaxed max-w-sm'>
-							Lorem ipsum dolor sit amet, consectetur adipiscing elit. In commodo
-							enim sit amet magna semper lacinia. Lorem ipsum dolor sit amet,
-							consectetur adipiscing elit. In commodo enim sit amet.
+							Discover our handpicked selection of premium electronics and tech accessories. Each product is carefully sourced and quality-checked to deliver the best value straight to your doorstep.
 						</p>
 
 						{/* CTA */}

@@ -47,8 +47,7 @@ const MachineMaintenance = () => {
 					</h2>
 
 					<p className='text-gray-500 text-sm leading-relaxed max-w-sm'>
-						Cum ut patrioque complectitur, agam erat dicam cu has. No ludus
-						timeam eligendi per ludus.
+						From custom-built PCs to everyday peripherals, we stock everything you need to set up, upgrade, or accessorise your workspace — all available and ready to ship.
 					</p>
 
 					<ul className='space-y-1.5'>

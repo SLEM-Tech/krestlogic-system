@@ -145,8 +145,7 @@ const page = () => {
 					</h2>
 
 					<p className='text-gray-500 text-sm leading-relaxed'>
-						Lorem ipsum dolor sit amet, consectetur adipiscing elit. In commodo
-						enim sit amet magna semper lacinia. Lorem ipsum dolor sit amet,
+						Have a question or need help with your order? Our dedicated support team is always ready to assist you. Reach us through any of our channels and we&apos;ll respond as quickly as possible.
 					</p>
 
 					{/* Social icons */}
