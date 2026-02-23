@@ -1,10 +1,10 @@
 import { Metadata } from "next";
 
 // 1. Core Configuration Constants
-export const SITE_NAME = "apppopper systems";
+export const SITE_NAME = "krestlogic systems";
 export const SITE_URL =
-	process.env.NEXT_PUBLIC_SITE_URL || "https://apppopper.com";
-export const TWITTER_HANDLE = "@apppopper";
+	process.env.NEXT_PUBLIC_SITE_URL || "https://krestlogic.com";
+export const TWITTER_HANDLE = "@krestlogic";
 
 interface SEOConfig {
 	title: string;
@@ -19,9 +19,9 @@ export const SEODATA: Record<string, SEOConfig> = {
 	default: {
 		title: `${SITE_NAME} | Your Trusted Electronics & Tech Marketplace`,
 		description:
-			"apppopper systems provides quality tech accessories, electronics, and home appliances delivered nationwide at the best prices.",
+			"krestlogic systems provides quality tech accessories, electronics, and home appliances delivered nationwide at the best prices.",
 		keywords: [
-			"apppopper systems",
+			"krestlogic systems",
 			"Electronics Nigeria",
 			"Tech Accessories",
 			"Online Shopping Nigeria",
@@ -34,7 +34,7 @@ export const SEODATA: Record<string, SEOConfig> = {
 	home: {
 		title: `${SITE_NAME} | Shop Electronics, Gadgets & More`,
 		description:
-			"Shop at apppopper systems for the best deals on electronics, gadgets, phones, tablets, and home appliances delivered to your doorstep.",
+			"Shop at krestlogic systems for the best deals on electronics, gadgets, phones, tablets, and home appliances delivered to your doorstep.",
 		keywords: [
 			"Buy Electronics Online",
 			"Gadgets Nigeria",
@@ -72,7 +72,7 @@ export const SEODATA: Record<string, SEOConfig> = {
 	consultation: {
 		title: `Contact Us | Get Support at ${SITE_NAME}`,
 		description:
-			"Need help? Contact our support team at apppopper systems for assistance with your orders and inquiries.",
+			"Need help? Contact our support team at krestlogic systems for assistance with your orders and inquiries.",
 		keywords: [
 			"Customer Support",
 			"Order Help",
@@ -83,27 +83,27 @@ export const SEODATA: Record<string, SEOConfig> = {
 	login: {
 		title: `Login | ${SITE_NAME}`,
 		description:
-			"Log in to your apppopper systems account to track your orders, manage your profile, and shop your favourite products.",
+			"Log in to your krestlogic systems account to track your orders, manage your profile, and shop your favourite products.",
 		keywords: [
 			"Login",
 			"Account Access",
-			"apppopper systems login",
+			"krestlogic systems login",
 		],
 	},
 	register: {
 		title: `Create Account | Join ${SITE_NAME}`,
 		description:
-			"Create an account on apppopper systems to start shopping quality electronics and tech accessories delivered nationwide.",
+			"Create an account on krestlogic systems to start shopping quality electronics and tech accessories delivered nationwide.",
 		keywords: [
 			"Register",
 			"Create Account",
-			"Join apppopper systems",
+			"Join krestlogic systems",
 		],
 	},
 	user_dashboard: {
 		title: `My Dashboard | ${SITE_NAME}`,
 		description:
-			"View your orders, track deliveries, and manage your account on apppopper systems.",
+			"View your orders, track deliveries, and manage your account on krestlogic systems.",
 		keywords: [
 			"Order tracking",
 			"My orders",
