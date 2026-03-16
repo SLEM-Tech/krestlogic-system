@@ -35,7 +35,7 @@ const RelatedProductsSection = ({
 		isLoading: categoryProductsWpIsLoading,
 	} = useProductsByCategory(productCategoryId);
 
-	const CategoryProducts: ProductType[] = categoryProducts;
+	const CategoryProducts: ProductType[] = categoryProducts ?? [];
 	const TotalCategoryProducts = CategoryProducts?.length;
 
 	const handleNext = () => {

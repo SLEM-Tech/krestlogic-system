@@ -265,28 +265,37 @@ const PopularProductsSection = ({
 /* ────────────────────────────────
    Main exported component
 ──────────────────────────────── */
-const SortedProducts = ({ middleBanner }: { middleBanner?: React.ReactNode }) => {
-	const [isLoading, setIsLoading] = useState(true);
+interface SortedProductsProps {
+	middleBanner?: React.ReactNode;
+	initialCategories?: CategoryType[];
+	initialProductsMap?: { [key: string]: ProductType[] };
+}
+
+const SortedProducts = ({ middleBanner, initialCategories, initialProductsMap }: SortedProductsProps) => {
+	const hasServerData = !!initialCategories?.length;
+	const [isLoading, setIsLoading] = useState(!hasServerData);
 	const [categoryProductsMap, setCategoryProductsMap] = useState<{
 		[key: string]: ProductType[];
-	}>({});
+	}>(initialProductsMap ?? {});
 
 	const {
-		data: categories,
+		data: fetchedCategories,
 		isLoading: categoryWpIsLoading,
 		isError: categoryIsError,
-	} = useCategories("");
+	} = useCategories(hasServerData ? undefined : "");
 
-	const filteredCategories: CategoryType[] = (categories || [])
-		.filter((cat: CategoryType) => cat.count > 0)
-		.slice(0, 6);
+	const filteredCategories: CategoryType[] = hasServerData
+		? initialCategories!
+		: (fetchedCategories ?? [])
+				.filter((cat: CategoryType) => cat.count > 0)
+				.slice(0, 6);
 
 	// Two groups → two distinct product sections
 	const group1 = filteredCategories.slice(0, 3);
 	const group2 = filteredCategories.slice(3, 6);
 
 	useEffect(() => {
-		if (!filteredCategories.length) return;
+		if (hasServerData || !filteredCategories.length) return;
 
 		const fetchCategoryProducts = async () => {
 			setIsLoading(true);
@@ -316,16 +325,16 @@ const SortedProducts = ({ middleBanner }: { middleBanner?: React.ReactNode }) =>
 
 		fetchCategoryProducts();
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [categories]);
+	}, [fetchedCategories]);
 
-	if (categoryIsError) return null;
+	if (!hasServerData && categoryIsError) return null;
 
 	return (
 		<>
 			<PopularProductsSection
 				allCategories={group1.length ? group1 : filteredCategories}
 				categoryProductsMap={categoryProductsMap}
-				isLoading={isLoading || categoryWpIsLoading}
+				isLoading={isLoading || (!hasServerData && categoryWpIsLoading)}
 				title='Popular Products'
 			/>
 
@@ -336,7 +345,7 @@ const SortedProducts = ({ middleBanner }: { middleBanner?: React.ReactNode }) =>
 				<PopularProductsSection
 					allCategories={group2}
 					categoryProductsMap={categoryProductsMap}
-					isLoading={isLoading || categoryWpIsLoading}
+					isLoading={isLoading || (!hasServerData && categoryWpIsLoading)}
 					title='Popular Products'
 				/>
 			)}
