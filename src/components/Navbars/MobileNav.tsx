@@ -43,7 +43,7 @@ const MobileNav: React.FC<MobileNavProps> = ({
 
 	const { email } = useToken();
 	const { data: customer } = useCustomer("");
-	const wc_customer2_info: Woo_Customer_Type[] = customer;
+	const wc_customer2_info: Woo_Customer_Type[] = customer ?? [];
 	const wc_customer_info: Woo_Customer_Type | undefined =
 		filterCustomersByEmail(wc_customer2_info, email);
 	const firstName = wc_customer_info?.first_name;
