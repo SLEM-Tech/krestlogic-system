@@ -14,6 +14,9 @@ import {
 	FaYoutube,
 } from "react-icons/fa";
 import { SiTiktok } from "react-icons/si";
+import { query } from "@src/lib/db";
+import { T } from "@src/lib/tables";
+import { hydrateProducts } from "@src/lib/productHelpers";
 
 const { description, title, ogImage, keywords } = SEODATA.home;
 export const metadata: Metadata = {
@@ -30,7 +33,89 @@ export const metadata: Metadata = {
 	},
 };
 
-const page = () => {
+async function fetchHomeData(): Promise<{
+	categories: CategoryType[];
+	categoryProductsMap: { [key: string]: ProductType[] };
+}> {
+	try {
+		const categoryRows = await query(
+			`SELECT id, name, slug, description, parent_id, image_url, count
+       FROM ${T.categories}
+       WHERE count > 0
+       ORDER BY name ASC
+       LIMIT 6`,
+		);
+
+		const categories: CategoryType[] = categoryRows.map((c: any) => ({
+			id: c.id,
+			name: c.name,
+			slug: c.slug,
+			description: c.description ?? "",
+			parent: c.parent_id ?? 0,
+			count: c.count,
+			image: c.image_url
+				? {
+						id: 0,
+						src: c.image_url,
+						name: "",
+						alt: "",
+						date_created: "",
+						date_created_gmt: "",
+						date_modified: "",
+						date_modified_gmt: "",
+					}
+				: null,
+			display: "default",
+			menu_order: 0,
+			_links: { self: [], collection: [] },
+		}));
+
+		if (!categories.length) return { categories: [], categoryProductsMap: {} };
+
+		const catIds = categories.map((c) => c.id);
+		const productRows = await query(
+			`SELECT DISTINCT p.*, pc.category_id
+       FROM ${T.products} p
+       JOIN ${T.productCategories} pc ON pc.product_id = p.id
+       WHERE pc.category_id = ANY($1::int[]) AND p.status = 'publish'
+       ORDER BY p.created_at DESC`,
+			[catIds],
+		);
+
+		const rowsByCat: { [key: string]: any[] } = {};
+		for (const row of productRows) {
+			const key = row.category_id.toString();
+			if (!rowsByCat[key]) rowsByCat[key] = [];
+			if (rowsByCat[key].length < 10) rowsByCat[key].push(row);
+		}
+
+		const uniqueRows = Object.values(
+			productRows.reduce((acc: any, row: any) => {
+				if (!acc[row.id]) acc[row.id] = row;
+				return acc;
+			}, {}),
+		);
+		const hydrated = await hydrateProducts(uniqueRows as any[]);
+		const hydratedMap = hydrated.reduce((acc: any, p: any) => {
+			acc[p.id] = p;
+			return acc;
+		}, {});
+
+		const categoryProductsMap: { [key: string]: ProductType[] } = {};
+		for (const [catId, rows] of Object.entries(rowsByCat)) {
+			categoryProductsMap[catId] = rows
+				.map((r: any) => hydratedMap[r.id])
+				.filter(Boolean);
+		}
+
+		return { categories, categoryProductsMap };
+	} catch {
+		return { categories: [], categoryProductsMap: {} };
+	}
+}
+
+const page = async () => {
+	const { categories, categoryProductsMap } = await fetchHomeData();
 	return (
 		<AppLayout>
 			{/* ── 1. Hero + Announcement bar + Features strip ── */}
@@ -54,7 +139,10 @@ const page = () => {
 						</p>
 					</div>
 
-					<SortedProducts />
+					<SortedProducts
+						initialCategories={categories}
+						initialProductsMap={categoryProductsMap}
+					/>
 				</div>
 			</section>
 

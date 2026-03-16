@@ -36,7 +36,7 @@ const MobileNav: React.FC<MobileNavProps> = ({
 		isError: categoryIsError,
 	} = useCategories("");
 
-	const Categories: CategoryType[] = categories;
+	const Categories: CategoryType[] = categories ?? [];
 	const [activeTab, setActiveTab] = useState<string>("allCategory");
 	const pathname = usePathname();
 	const router = useRouter();

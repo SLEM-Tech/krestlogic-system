@@ -46,7 +46,7 @@ const MainCategorySection = () => {
 		isError: categoryProductsIsError,
 	} = useProductsByCategory(numberAfterDash);
 
-	const CategoryProducts: ProductType[] = categoryProducts;
+	const CategoryProducts: ProductType[] = categoryProducts ?? [];
 
 	const totalDocs = CategoryProducts?.length;
 

@@ -25,7 +25,7 @@ interface CategoryType {
 	parent: number;
 	description: string;
 	display: string;
-	image: CategoryImage;
+	image: CategoryImage | null;
 	menu_order: number;
 	count: number;
 	_links: CategoryLinks;

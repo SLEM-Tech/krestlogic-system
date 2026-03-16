@@ -17,17 +17,12 @@ const pacifico = Pacifico({
 
 export const LogoImage = ({ className }: LogoImageProps) => {
 	return (
-		<Link href='/' className='flex items-end'>
-			{/* <Picture
-				src={logoImage}
-				alt='logo'
-				priority
-				loading='lazy'
-				className={`w-[20px] lg:w-[30px] duration-300 hover:scale-105 transition-[.3] hover:animate-pulse ${className}`}
+		<Link href='/' className='flex items-center'>
+			<img
+				src='/images/logo.svg'
+				alt='Krestlogic Systems'
+				className={`h-10 w-auto ${className ?? ""}`}
 			/>
-			<h4 className={`text-base sm:text-lg font-medium ${pacifico.className}`}>
-				krestlogic systems
-			</h4> */}
 		</Link>
 	);
 };

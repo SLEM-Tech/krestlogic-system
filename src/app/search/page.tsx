@@ -15,7 +15,7 @@ const Page = () => {
 		isError: ProductIsError,
 	} = useProductSearch(search);
 
-	const Products: ProductType[] = products;
+	const Products: ProductType[] = products ?? [];
 	const ProductsTotal = Products?.length;
 
 	return (
